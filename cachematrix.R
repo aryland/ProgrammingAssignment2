@@ -2,14 +2,34 @@
 ## functions do
 
 ## Write a short comment describing this function
+## First part of the inverse matrix exercise
 
-makeCacheMatrix <- function(x = matrix()) {
-
+makeVector <- function(x = numeric()) {
+    m <- NULL
+    set <- function(y) {
+        x <<- y
+        inv <<- NULL
+    }
+    get <- function() x
+    setInverse <- function(inverse) inv <<- inverse
+    getInverse <- function() inv
+    list(set = set, get = get,
+         setInverse = setInverse,
+         getInverse = getInverse)
 }
 
 
 ## Write a short comment describing this function
+## Second half of the inverse matrix lexical scoping
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+    m <- x$getInverse()
+    if(!is.null(inv)) {
+        message("getting cached data")
+        return(inv)
+    }
+    mat <- x$get()
+    inv <- solve(mat, ...)
+    x$setInverse(inv)
+    inv
 }
